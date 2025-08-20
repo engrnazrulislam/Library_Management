@@ -12,7 +12,7 @@ SECRET_KEY = 'django-insecure-^*n29r_5scd7lpx&!t*m%w$gmpr*j3f+5w(r8-hh8$v_2t1fw!
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+AUTH_USER_MODEL = 'users.User'
 ALLOWED_HOSTS = []
 
 
@@ -31,9 +31,11 @@ INSTALLED_APPS = [
     'borrow',
     'members',
     'users',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -114,3 +116,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]
