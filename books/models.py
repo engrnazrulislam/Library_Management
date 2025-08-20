@@ -21,7 +21,9 @@ class Book(models.Model):
     category = models.CharField(max_length=100, blank=True, null=True)
     image = models.ImageField(
         upload_to="books/images/", blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    quantity = models.PositiveIntegerField(blank=True, null=True)
+    added_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     status = models.ForeignKey(Status, on_delete=models.SET_NULL, null=True, related_name="books")
 
