@@ -1,7 +1,9 @@
 from django.db import models
+from uuid import uuid4
 
 # Create your models here.
 class Author(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     name = models.CharField(max_length=100)
     biography = models.TextField(blank=True, null=True)
     def __str__(self):
@@ -15,6 +17,7 @@ class Status(models.Model):
         return self.name
 
 class Book(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     title = models.CharField(max_length=255)
     author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name="books")
     isbn = models.CharField(max_length=13, unique=True)

@@ -9,5 +9,5 @@ router.register('authors', AuthorViewSet, basename='author')
 router.register('books', BookViewSet, basename='book')
 router.register('members', MemberViewSet, basename='member')
 router.register('borrow-records', BorrowRecordViewSet, basename='borrow-record')
-router.register(r'status', StatusViewSet, basename='status')
+router.register('status', StatusViewSet, basename='status')
 urlpatterns = router.urls

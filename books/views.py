@@ -7,7 +7,7 @@ from .serializers import BookSerializer, AuthorSerializer, StatusSerializer
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import viewsets, filters
 from .models import Author
-
+from api.permissions import IsAdminOrReadOnly
 
 # Create your views here.
 
@@ -18,6 +18,7 @@ class AuthorViewSet(viewsets.ModelViewSet):
 class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+    permission_classes = [IsAdminOrReadOnly]
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'author__name', 'isbn']
 
@@ -29,6 +30,7 @@ class StatusViewSet(viewsets.ModelViewSet):
 class ViewSpecificBook(RetrieveUpdateDestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+    permission_classes = [IsAdminOrReadOnly]
     lookup_field = 'id'
 
     def delete(self, request, id, *args, **kwargs):
