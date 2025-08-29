@@ -8,14 +8,7 @@ class Author(models.Model):
     biography = models.TextField(blank=True, null=True)
     def __str__(self):
         return self.name
-
-class Status(models.Model):
-    name = models.CharField(max_length=50, unique=True)
-    description = models.TextField()
-
-    def __str__(self):
-        return self.name
-
+    
 class Book(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     title = models.CharField(max_length=255)
@@ -28,7 +21,6 @@ class Book(models.Model):
     quantity = models.PositiveIntegerField(blank=True, null=True)
     added_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    status = models.ForeignKey(Status, on_delete=models.SET_NULL, null=True, related_name="books")
 
     def __str__(self):
         return f"{self.title} ({self.isbn})"

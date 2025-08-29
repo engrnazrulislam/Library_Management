@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Book, Author, Status
+from .models import Book, Author
 from django.shortcuts import get_object_or_404
-from .serializers import BookSerializer, AuthorSerializer, StatusSerializer
+from .serializers import BookSerializer, AuthorSerializer
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import viewsets, filters
 from .models import Author
@@ -21,11 +21,6 @@ class BookViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'author__name', 'isbn']
-
-
-class StatusViewSet(viewsets.ModelViewSet):
-    queryset = Status.objects.all()
-    serializer_class = StatusSerializer
 
 class ViewSpecificBook(RetrieveUpdateDestroyAPIView):
     queryset = Book.objects.all()
