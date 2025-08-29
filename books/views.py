@@ -11,6 +11,22 @@ class AuthorViewSet(viewsets.ModelViewSet):
     serializer_class = AuthorSerializer
 
 class BookViewSet(viewsets.ModelViewSet):
+    """
+    retrieve:
+    Return a book instance by ID.
+
+    list:
+    Return all available books.
+
+    create:
+    Add a new book (Librarian only).
+
+    update:
+    Update a book (Librarian only).
+
+    delete:
+    Delete a book (Librarian only).
+    """
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [IsLibrarianOrReadOnly]

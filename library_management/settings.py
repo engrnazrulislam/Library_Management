@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'drf_yasg',
     'rest_framework',
     'djoser',
     'api',
@@ -147,4 +148,15 @@ SIMPLE_JWT = {
    'AUTH_HEADER_TYPES': ('JWT',),
    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
    "REFRESH_TOKEN_LIFETIME": timedelta(days=2),
+}
+
+SWAGGER_SETTINGS = {
+'SECURITY_DEFINITIONS': {
+'Bearer': {
+'type': 'apiKey',
+'name': 'Authorization',
+'in': 'header',
+'description': 'Enter your JWT Token in the format JWT <yourtoken>',
+}
+}
 }
