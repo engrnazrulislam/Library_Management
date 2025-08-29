@@ -31,6 +31,7 @@ class BorrowReturnRecord(models.Model):
             self.book.save()
             if not self.return_date:
                 self.return_date = now().date()
+                
         super().save(*args, **kwargs)
 
     def __str__(self):
