@@ -3,8 +3,8 @@ from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-from .models import Book, Author
-from .serializers import BookSerializer, AuthorSerializer
+from .models import Book, Author, BookImage
+from .serializers import BookSerializer, AuthorSerializer, BookImageSerializer
 from api.permissions import IsLibrarianOrReadOnly
 class AuthorViewSet(viewsets.ModelViewSet):
     queryset = Author.objects.all()
@@ -27,11 +27,14 @@ class BookViewSet(viewsets.ModelViewSet):
     delete:
     Delete a book (Librarian only).
     """
-    queryset = Book.objects.all()
+    # queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [IsLibrarianOrReadOnly]
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'author__name', 'isbn']
+
+    def get_queryset(self):
+        return Book.objects.prefetch_related('images').all()
 
 class ViewSpecificBook(RetrieveUpdateDestroyAPIView):
     queryset = Book.objects.all()
@@ -45,3 +48,11 @@ class ViewSpecificBook(RetrieveUpdateDestroyAPIView):
             return Response({'message': 'Book with stock more than 10 cannot be deleted'})
         book.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class BookImageViewSet(viewsets.ModelViewSet):
+    serializer_class = BookImageSerializer
+    permission_classes = [IsLibrarianOrReadOnly]
+    def get_queryset(self):
+        return BookImage.objects.filter(book_id=self.kwargs.get('book_pk'))
+    def perform_create(self, serializer):
+        serializer.save(book_id=self.kwargs.get('book_pk'))
