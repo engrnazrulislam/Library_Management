@@ -70,8 +70,8 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'library_management.wsgi.application'
-WSGI_APPLICATION = 'library_management.wsgi.app'
+WSGI_APPLICATION = 'library_management.wsgi.application'
+# WSGI_APPLICATION = 'library_management.wsgi.app'
 
 
 # Database
