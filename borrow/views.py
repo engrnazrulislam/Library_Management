@@ -16,6 +16,9 @@ class BorrowRecordViewSet(viewsets.ModelViewSet):
         member = self.request.user.member_profile
         book = serializer.validated_data['book']
 
+        if BorrowReturnRecord.objects.filter(member=member, book=book, status='Borrowed').exists():
+            raise ValidationError("You have already borrowed this book.")
+
         if book.quantity is None or book.quantity <= 0:
             raise ValidationError({'error': 'Book not available for borrowing'})
 
