@@ -125,6 +125,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+#Media URL
+MEDIA_URL = '/media/'
+# Media Storage Settings for cloudinary
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
@@ -170,4 +175,3 @@ SWAGGER_SETTINGS = {
 }
 }
 }
-
