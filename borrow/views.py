@@ -28,16 +28,29 @@ class BorrowRecordViewSet(viewsets.ModelViewSet):
         instance = self.get_object()
         old_status = instance.status
         new_status = serializer.validated_data.get('status', old_status)
-        instance = serializer.save()
+        book = instance.book
 
         if old_status != new_status:
-            book = instance.book
-            if new_status == 'Return':
+            if new_status == 'Return' and old_status == 'Borrowed':
                 book.quantity += 1
-                instance.return_date = now().date()
-            elif new_status == 'Borrowed':
+                serializer.save(return_date=now().date())
+            elif new_status == 'Borrowed' and old_status == 'Return':
                 if book.quantity <= 0:
                     raise ValidationError({'error': 'Book not available for borrowing'})
                 book.quantity -= 1
+                serializer.save()
             book.save()
-            instance.save()
+        else:
+            serializer.save()
+
+        # if old_status != new_status:
+        #     book = instance.book
+        #     if new_status == 'Return':
+        #         book.quantity += 1
+        #         instance.return_date = now().date()
+        #     elif new_status == 'Borrowed':
+        #         if book.quantity <= 0:
+        #             raise ValidationError({'error': 'Book not available for borrowing'})
+        #         book.quantity -= 1
+        #     book.save()
+        #     instance.save()
