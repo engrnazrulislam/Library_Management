@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from .models import BorrowRecord
+from .models import BorrowReturnRecord
 
 class BorrowRecordSerializer(serializers.ModelSerializer):
+    book_title = serializers.CharField(source='book.title', read_only=True)
     class Meta:
-        model = BorrowRecord
-        fields = ['id','book','member','borrow_date','return_date']
-        
+        model = BorrowReturnRecord
+        fields = ['id', 'book', 'book_title', 'member','status', 'borrow_date', 'return_date']
