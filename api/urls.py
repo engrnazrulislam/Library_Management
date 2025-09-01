@@ -7,13 +7,13 @@ from books.views import BookViewSet, AuthorViewSet
 from members.views import MemberViewSet
 from borrow.views import BorrowRecordViewSet
 from users.views import UserViewSet
-router = DefaultRouter()
-router.register('authors', AuthorViewSet, basename='author')
-router.register('books', BookViewSet, basename='book')
-router.register('members', MemberViewSet, basename='member')
-router.register('borrow-records', BorrowRecordViewSet, basename='borrow-record')
-router.register('users',UserViewSet, basename='users')
-urlpatterns = router.urls
+# router = DefaultRouter()
+# router.register('authors', AuthorViewSet, basename='author')
+# router.register('books', BookViewSet, basename='book')
+# router.register('members', MemberViewSet, basename='member')
+# router.register('borrow-records', BorrowRecordViewSet, basename='borrow-record')
+# router.register('users',UserViewSet, basename='users')
+
 
 
 # Main routers
@@ -31,9 +31,10 @@ member_router.register('borrowrecords', BorrowRecordViewSet, basename='member-bo
 book_router = routers.NestedDefaultRouter(router, r'books', lookup='book')
 book_router.register('borrowrecords', BorrowRecordViewSet, basename='book-borrowrecords')
 
-urlpatterns = [
-    path('', include(router.urls)),
-    path('', include(member_router.urls)),
-    path('', include(book_router.urls)),
-]
+urlpatterns = router.urls
+# urlpatterns = [
+#     path('', include(router.urls)),
+#     path('', include(member_router.urls)),
+#     path('', include(book_router.urls)),
+# ]
 
